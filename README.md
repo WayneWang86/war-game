@@ -1,4 +1,4 @@
-# war-game
+# War Game
 
 ## Introduction
 An RESTful app that demonstrate two bot players plays the card game of War. User are provided with two endpoints to interact with:
@@ -36,14 +36,17 @@ This application provided two API endpoint, where one endpoint is to start a gam
     Once a new game started, it will show the whole game log on the page
     * Here is an example of a singe round of the game:
     ![singe-round-game](./img/single_round.png)
+
     This log shows that Tom has 27 cards on his hand while Jerry has 23 cards on his hand.
     The number of cards on table is 2.  
     * Here is an example of a round when WAR is occurred:
     ![war-demo](./img/war.png)
+    
     When the war is initialized, two players stay in the same round while putting a new card face down
     on the table and compare the next card. Now there are 6 cards on the table.
     * Here is an example of the leaderboard:
     ![leaderboard](./img/leaderboard.png)
+    
     When entering the leaderboard page, the page will display all the players lifetime wins ordered a form of leaderboard.
 
 
