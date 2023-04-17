@@ -13,9 +13,9 @@ firebase_admin.initialize_app(cred, {
 
 app = Flask(__name__)
 
-@app.route('/start_game')
-@app.route('/start_game/<player_1>')
-@app.route("/start_game/<player_1>/<player_2>")
+@app.route('/start-game')
+@app.route('/start-game/<player_1>')
+@app.route("/start-game/<player_1>/<player_2>")
 def start_game(player_1 = None, player_2 = None):
     """
     This function handles the API call to start a game, taking two parameters
@@ -207,8 +207,7 @@ def check_status(deck_1, deck_2, player_1, player_2):
     # If either player's deck is empty, then game continues
     return False, ""
 
-
-@app.route("/view_leaderboard")
+@app.route("/leaderboard")
 def read_winning_record():
     """
     This function retrive data from database and output each player's
@@ -239,12 +238,13 @@ def read_winning_record():
     winning_record = winning_record + "<p style='color: darkgray;'>===================================</p>"
 
     # sorted_winners = sorted(wins.items(), key=lambda x: x[1], reverse=True)
+    sorted_winners = dict(sorted(wins.items(), key=lambda x: x[1], reverse=True))
     
-    for winner, num_wins in wins.items():
+    for winner, num_wins in sorted_winners.items():
         winning_record = winning_record + "<h2 style='color: darkblue; font-weight: bold'>{} -- {}</h2>".format(winner, num_wins) + \
                                           "<p style='color: darkgray;'> ===================================</p>"
 
     return Markup(winning_record)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(port = 8099)
