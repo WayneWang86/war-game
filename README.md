@@ -50,5 +50,9 @@ This application provided two API endpoint, where one endpoint is to start a gam
     
     When entering the leaderboard page, the page will display all the players lifetime wins ordered a form of leaderboard.
 
-
+## Future Work
+* Interactivity: 
+	Current the application returns a static game log per user request, a future step would be implementing interactive functionality to allow users 		to play with the computer and to control the start of each round.
+* UI design:
+	The current UI design is very basic, if given more time, I could add more UI design to the game to make it more lively
 
