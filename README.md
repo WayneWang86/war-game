@@ -18,7 +18,7 @@ The implementation of this game is following the rules [here](https://bicyclecar
 ## Instruction
 1. Use `git clone` command to create a copy of the repository on your local machine. 
 2. Run command `docker build -t war-game .` at the root directory of this project to build a docker image from the Dockerfile
-3. Run command `docker run -p 8999:5000 war-game` to start the War Game application
+3. Run command `docker run -p 8099:5000 war-game` to start the War Game application
 4. The web application can be access through [http://localhost:8099/](http://localhost:8099/)
 
 ## API Endpoint
