@@ -93,11 +93,17 @@ def start_game(player_1 = None, player_2 = None):
             game_log = game_log + "<p class='war' style = 'color: darkred; font-size: 30px; padding: 0; margin: 0;'><span style='text-align: center; display: inline-block; font-family: 'Apple Symbols'; font-size: 100px;'>⚔⚔⚔⚔⚔WAR⚔⚔⚔⚔⚔</span></p>"
 
             game_over, winner = check_status(deck_1, deck_2, player_1, player_2)
-            if game_over:
+            if game_over == 1:
                 game_res = "<h1 style='font-size: 50px; color: red;'>WINNER is {}</h1>".format(winner)
                 game_log = game_res + game_log + "<p class='war' style = 'color: darkred; font-size: 30px; padding: 0; margin: 0;'>No soldiers left for the war</p>" + \
                 "<h1 style='font-size: 30px; color: red;'>{} is the ultimate winner!</h1>".format(winner)
                 return Markup(game_log)
+            
+            if game_over == 2:
+                game_res = "<h1 style='font-size: 50px; color: red;'>GAME TIED, NO WINNERS</h1>"
+                game_log = game_res + game_log + "<p class='war' style = 'color: darkred; font-size: 30px; padding: 0; margin: 0;'>No soldiers left for the war</p>" + \
+                "<h1 style='font-size: 30px; color: red;'>GAME TIED, both player have no soldiers left for the war</h1>"
+                return Markup(game_log)                
             
             # Each player put a card face down to the table
             table.append(deck_1.pop(0))
@@ -117,12 +123,33 @@ def start_game(player_1 = None, player_2 = None):
             game_log = game_log + "<br>"
         else:
             game_log = game_log + "<p>===================================</p>"
+        
+        # set a hard thresold to end the game    
+        if round_cnt == 500:
+            if (len(deck_1) == len(deck_2)):
+                game_res = "<h1 style='font-size: 50px; color: red;'>GAME TIED, NO WINNERS</h1>"
+                game_log = game_res + game_log + \
+                    "<h1 style='color: green;'>============ GAME ENDED ============</h1><br>" + \
+                        "<h1 style='font-size: 30px; color: red;'>GAME TIED AFTER 500 ROUNDS</h1>"
+            else:
+                if (len(deck_1) > len(deck_2)):
+                    winner = player_1
+                elif (len(deck_2) > len(deck_1)):
+                    winner = player_2
+                
+                game_res = "<h1 style='font-size: 50px; color: red;'>WINNER is {}</h1>".format(winner)
+                game_log = game_res + game_log + \
+                    "<h1 style='color: green;'>============ GAME ENDED ============</h1><br>" + \
+                    "<h1 style='font-size: 30px; color: red;'>{} is the winner after 500 rounds!</h1>".format(winner)
+                write_res(player_1, player_2, winner)
+            
+            return Markup(game_log)
 
     game_over, winner = check_status(deck_1, deck_2, player_1, player_2)
 
     game_res = "<h1 style='font-size: 50px; color: red;'>WINNER is {}</h1>".format(winner)
     game_log = game_res + game_log + \
-        "<h1 style='color: green;'>============ GAME START ============</h1><br>" + \
+        "<h1 style='color: green;'>============ GAME ENDED ============</h1><br>" + \
             "<h1 style='font-size: 30px; color: red;'>{} is the ultimate winner!</h1>".format(winner)
     
     write_res(player_1, player_2, winner)
@@ -172,6 +199,9 @@ def card_suit_val(card):
     val = card % 13
     if val == 0:
         val = 13
+    # Ace is larger than the King
+    if val == 1:
+        val = 14
 
     if (card - 1) // 13 == 0:
         suit = assets.hearts
@@ -198,14 +228,18 @@ def check_status(deck_1, deck_2, player_1, player_2):
     boolean: Whether the game is over (one player has empty deck)
     str: The name of the winner (empty str if the game continues)
     """
+    # If both players have no cards on hand
+    if (len(deck_1) == 0 and len(deck_2) == 0):
+        return 2, ""
+    
     # If player_1 deck is empty, then play_2 wins the game
     if (len(deck_1) == 0):
-        return True, player_2
+        return 1, player_2
     # If player_1 deck is empty, then play_2 wins the game
     if (len(deck_2) == 0):
-        return True, player_1
+        return 1, player_1
     # If either player's deck is empty, then game continues
-    return False, ""
+    return 0, ""
 
 @app.route("/leaderboard")
 def read_winning_record():
