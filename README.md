@@ -18,7 +18,7 @@ The implementation of this game is following the rules [here](https://bicyclecar
 ## Instruction
 1. Use `git clone` command to create a copy of the repository on your local machine. 
 2. Run command `docker build -t war-game .` at the root directory of this project to build a docker image from the Dockerfile
-3. Run command `docker run -p 8999:5000 war-game` to start the War Game application
+3. Run command `docker run -p 8099:8099 war-game` to start the War Game application
 4. The web application can be access through [http://localhost:8099/](http://localhost:8099/)
 
 ## API Endpoint
@@ -34,20 +34,25 @@ This application provided two API endpoint, where one endpoint is to start a gam
 ## Demo
 * Game interface:
     Once a new game started, it will show the whole game log on the page
-    * Here is an example of a singe round of the game:
-    ![singe-round-game](./img/single_round.png)
+    * Here is an example of a singe round of the game:  
+    	<img src="./img/single_round.png" alt="singe-round-game" width="30%">
 
     This log shows that Tom has 27 cards on his hand while Jerry has 23 cards on his hand.
     The number of cards on table is 2.  
-    * Here is an example of a round when WAR is occurred:
-    ![war-demo](./img/war.png)
+    * Here is an example of a round when WAR is occurred:  
+    	<img src="./img/war.png" alt="war-demo" width="30%">
     
     When the war is initialized, two players stay in the same round while putting a new card face down
     on the table and compare the next card. Now there are 6 cards on the table.
-    * Here is an example of the leaderboard:
-    ![leaderboard](./img/leaderboard.png)
+    * Here is an example of the leaderboard:  
+     
+    	<img src="./img/leaderboard.png" alt="leaderboard" width="50%">
     
     When entering the leaderboard page, the page will display all the players lifetime wins ordered a form of leaderboard.
 
-
+## Future Work
+* Interactivity: 
+	Current the application returns a static game log per user request, a future step would be implementing interactive functionality to allow users 		to play with the computer and to control the start of each round.
+* UI design:
+	The current UI design is very basic, if given more time, I could add more UI design to the game to make it more lively
 
